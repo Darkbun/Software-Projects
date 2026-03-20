@@ -45,7 +45,7 @@ public class PatientController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PatientDto> getPatientById(@PathVariable long id){
+    public ResponseEntity<PatientDto> getPatientById(@PathVariable Long id){
         System.out.println("Fetching the patient by ID");
         Patient patient = patientService.getPatientById(id);
         if (patient != null) {
@@ -55,7 +55,7 @@ public class PatientController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PatientDto> updatePatient(@PathVariable long id, @RequestBody PatientDto patientDto){
+    public ResponseEntity<PatientDto> updatePatient(@PathVariable Long id, @RequestBody PatientDto patientDto){
         System.out.println("Updating the patient by ID");
         Patient patient = DtoConverter.toPatient(patientDto);
         Patient updatedPatient = patientService.updatePatient(id, patient);
@@ -66,7 +66,7 @@ public class PatientController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletePatient(@PathVariable long id){
+    public ResponseEntity<Void> deletePatient(@PathVariable Long id){
         System.out.println("Deleting the patient by ID");
         Patient patient = patientService.getPatientById(id);
         if (patient != null) {

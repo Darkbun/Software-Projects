@@ -31,7 +31,7 @@ public class DoctorService {
         }
     }
 
-    public Doctor getDoctorById(long id) {
+    public Doctor getDoctorById(Long id) {
         try{
             return doctorRepository.findById(id).orElse(null);
         }catch(Exception e){
@@ -40,7 +40,7 @@ public class DoctorService {
         }
     }
 
-    public Doctor updateDoctor(long id, Doctor doctor){
+    public Doctor updateDoctor(Long id, Doctor doctor){
         try{
             Doctor existingDoctor = doctorRepository.findById(id).orElse(null);
             if (existingDoctor != null) {
@@ -55,7 +55,7 @@ public class DoctorService {
         }
     }
 
-    public void deleteDoctor(long id) {
+    public void deleteDoctor(Long id) {
         try{
             doctorRepository.deleteById(id);
         }catch(Exception e){

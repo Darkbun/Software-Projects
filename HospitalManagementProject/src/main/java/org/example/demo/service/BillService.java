@@ -15,9 +15,18 @@ public class BillService {
 
     public Bill createBill(Bill bill) {
         try{
-            return billRepository.save(bill);
+            System.out.println("Creating bill with data:");
+            System.out.println("Patient ID: " + bill.getPatientId());
+            System.out.println("Doctor ID: " + bill.getDoctorId());
+            System.out.println("Amount: " + bill.getAmount());
+            System.out.println("Status: " + bill.getStatus());
+            
+            Bill savedBill = billRepository.save(bill);
+            System.out.println("Bill saved successfully with ID: " + savedBill.getId());
+            return savedBill;
         }catch(Exception e){
-            System.out.println("Error message: "+e.getMessage());
+            System.out.println("Error creating bill: "+e.getMessage());
+            e.printStackTrace(); // Print full stack trace for debugging
             return null;
         }
     }
@@ -31,7 +40,7 @@ public class BillService {
         }
     }
 
-    public Bill getBillById(long id) {
+    public Bill getBillById(Long id) {
         try{
             return billRepository.findById(id).orElse(null);
         }catch(Exception e){
@@ -40,7 +49,7 @@ public class BillService {
         }
     }
 
-    public Bill updateBill(long id, Bill bill){
+    public Bill updateBill(Long id, Bill bill){
         try{
             Bill existingBill = billRepository.findById(id).orElse(null);
             if (existingBill != null) {
@@ -57,7 +66,7 @@ public class BillService {
         }
     }
 
-    public void deleteBill(long id) {
+    public void deleteBill(Long id) {
         try{
             billRepository.deleteById(id);
         }catch(Exception e){

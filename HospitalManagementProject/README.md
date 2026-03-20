@@ -85,7 +85,7 @@ org.example.demo
 - id (Long, Primary Key, Auto-increment)
 - patientId (Long, Foreign Key)
 - doctorId (Long, Foreign Key)
-- date (String)
+- date (LocalDateTime in database, formatted as String "dd-MM-yyyy HH:mm:ss" in API)
 
 ### Bill
 - id (Long, Primary Key, Auto-increment)
@@ -140,6 +140,28 @@ All error responses include a descriptive message and status code.
 - Includes comprehensive logging for debugging
 - Follows Spring Boot best practices
 - Uses Lombok annotations to reduce boilerplate code
+
+## API Examples
+
+### Create Appointment
+```json
+POST /api/v1/appointment
+{
+    "patientId": 1,
+    "doctorId": 2,
+    "date": "20-03-2026 14:30:00"
+}
+```
+
+### Response
+```json
+{
+    "id": 1,
+    "patientId": 1,
+    "doctorId": 2,
+    "date": "20-03-2026 14:30:00"
+}
+```
 
 ## Future Enhancements
 

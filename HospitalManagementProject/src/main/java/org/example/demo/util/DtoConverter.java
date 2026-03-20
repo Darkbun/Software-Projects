@@ -16,7 +16,7 @@ public class DtoConverter {
 
     public static Patient toPatient(PatientDto patientDto) {
         return Patient.builder()
-                .id(patientDto.getId() != null ? patientDto.getId() : 0)
+                .id(patientDto.getId()) // Let JPA handle null/0 for new records
                 .name(patientDto.getName())
                 .gender(patientDto.getGender())
                 .age(patientDto.getAge())
@@ -33,7 +33,7 @@ public class DtoConverter {
 
     public static Doctor toDoctor(DoctorDto doctorDto) {
         return Doctor.builder()
-                .id(doctorDto.getId() != null ? doctorDto.getId() : 0)
+                .id(doctorDto.getId()) // Let JPA handle null/0 for new records
                 .name(doctorDto.getName())
                 .speciality(doctorDto.getSpeciality())
                 .build();
@@ -50,13 +50,19 @@ public class DtoConverter {
     }
 
     public static Bill toBill(BillDto billDto) {
-        return Bill.builder()
-                .id(billDto.getId() != null ? billDto.getId() : 0)
-                .patientId(billDto.getPatientId() != null ? billDto.getPatientId() : 0)
-                .doctorId(billDto.getDoctorId() != null ? billDto.getDoctorId() : 0)
+        System.out.println("Converting BillDto to Bill:");
+        System.out.println("Input DTO: " + billDto.toString());
+        
+        Bill bill = Bill.builder()
+                .id(billDto.getId()) // Let JPA handle null/0 for new records
+                .patientId(billDto.getPatientId())
+                .doctorId(billDto.getDoctorId())
                 .amount(billDto.getAmount())
                 .status(billDto.getStatus())
                 .build();
+        
+        System.out.println("Converted Entity: " + bill.toString());
+        return bill;
     }
 
     public static AppointmentDto toAppointmentDto(Appointment appointment) {
@@ -64,16 +70,22 @@ public class DtoConverter {
                 .id(appointment.getId())
                 .patientId(appointment.getPatientId())
                 .doctorId(appointment.getDoctorId())
-                .date(appointment.getDate())
+                .date(DateUtil.formatDateTime(appointment.getDate()))
                 .build();
     }
 
     public static Appointment toAppointment(AppointmentDto appointmentDto) {
-        return Appointment.builder()
-                .id(appointmentDto.getId() != null ? appointmentDto.getId() : 0)
-                .patientId(appointmentDto.getPatientId() != null ? appointmentDto.getPatientId() : 0)
-                .doctorId(appointmentDto.getDoctorId() != null ? appointmentDto.getDoctorId() : 0)
-                .date(appointmentDto.getDate())
+        System.out.println("Converting AppointmentDto to Appointment:");
+        System.out.println("Input DTO: " + appointmentDto.toString());
+        
+        Appointment appointment = Appointment.builder()
+                .id(appointmentDto.getId()) // Let JPA handle null/0 for new records
+                .patientId(appointmentDto.getPatientId())
+                .doctorId(appointmentDto.getDoctorId())
+                .date(DateUtil.parseDateTime(appointmentDto.getDate()))
                 .build();
+        
+        System.out.println("Converted Entity: " + appointment.toString());
+        return appointment;
     }
 }

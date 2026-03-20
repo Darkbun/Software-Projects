@@ -33,7 +33,7 @@ public class PatientService {
         }
     }
 
-    public Patient getPatientById(long id) {
+    public Patient getPatientById(Long id) {
         try{
             return patientRepository.findById(id).orElse(null);
         }catch(Exception e){
@@ -42,7 +42,7 @@ public class PatientService {
         }
     }
 
-    public Patient updatePatient(long id, Patient patient){
+    public Patient updatePatient(Long id, Patient patient){
         try{
             Patient existingPatient = patientRepository.findById(id).orElse(null);
             if (existingPatient != null) {
@@ -58,7 +58,7 @@ public class PatientService {
         }
     }
 
-    public void deletePatient(long id) {
+    public void deletePatient(Long id) {
         try{
             System.out.println("Into service layer");
             patientRepository.deleteById(id);

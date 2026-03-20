@@ -1,9 +1,9 @@
 package org.example.demo.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import lombok.*;
 
 @Entity
@@ -12,12 +12,13 @@ import lombok.*;
 @NoArgsConstructor
 @Getter
 @Setter
+@ToString
 public class Bill {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    private long patientId;
-    private long doctorId;
+    private Long id; // Change to Long to handle null properly
+    private Long patientId; // Change to Long for consistency
+    private Long doctorId; // Change to Long for consistency
     private double amount;
     private String status;
 }

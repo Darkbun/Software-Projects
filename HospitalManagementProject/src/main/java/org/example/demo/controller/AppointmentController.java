@@ -23,10 +23,16 @@ public class AppointmentController {
     @PostMapping
     public ResponseEntity<AppointmentDto> createAppointment(@RequestBody AppointmentDto appointmentDto){
         System.out.println("Creating Appointment");
+        System.out.println("Received DTO: " + appointmentDto.toString());
+        
         Appointment appointment = DtoConverter.toAppointment(appointmentDto);
+        System.out.println("Converted to Entity: " + appointment.toString());
+        
         Appointment createdAppointment = appointmentService.createAppointment(appointment);
         if (createdAppointment != null) {
-            return new ResponseEntity<>(DtoConverter.toAppointmentDto(createdAppointment), HttpStatus.CREATED);
+            AppointmentDto responseDto = DtoConverter.toAppointmentDto(createdAppointment);
+            System.out.println("Response DTO: " + responseDto.toString());
+            return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
         }
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -45,7 +51,7 @@ public class AppointmentController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AppointmentDto> getAppointmentById(@PathVariable long id){
+    public ResponseEntity<AppointmentDto> getAppointmentById(@PathVariable Long id){
         System.out.println("Fetching the Appointment by ID");
         Appointment appointment = appointmentService.getAppointmentById(id);
         if (appointment != null) {
@@ -55,7 +61,7 @@ public class AppointmentController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AppointmentDto> updateAppointment(@PathVariable long id, @RequestBody AppointmentDto appointmentDto){
+    public ResponseEntity<AppointmentDto> updateAppointment(@PathVariable Long id, @RequestBody AppointmentDto appointmentDto){
         System.out.println("Updating the Appointment by ID");
         Appointment appointment = DtoConverter.toAppointment(appointmentDto);
         Appointment updatedAppointment = appointmentService.updateAppointment(id, appointment);
@@ -66,7 +72,7 @@ public class AppointmentController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteAppointment(@PathVariable long id){
+    public ResponseEntity<Void> deleteAppointment(@PathVariable Long id){
         System.out.println("Deleting the Appointment by ID");
         Appointment appointment = appointmentService.getAppointmentById(id);
         if (appointment != null) {

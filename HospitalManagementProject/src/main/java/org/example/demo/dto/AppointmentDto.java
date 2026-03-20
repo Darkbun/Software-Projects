@@ -1,17 +1,22 @@
 package org.example.demo.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.*;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class AppointmentDto {
     private Long id;
+    
+    @JsonProperty("patientId")
     private Long patientId;
+    
+    @JsonProperty("doctorId")
     private Long doctorId;
-    private String date;
+    
+    @JsonProperty("date")
+    private String date; // Formatted date string for API
 }

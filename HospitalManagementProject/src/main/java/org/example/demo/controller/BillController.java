@@ -23,10 +23,16 @@ public class BillController {
     @PostMapping
     public ResponseEntity<BillDto> createBill(@RequestBody BillDto billDto){
         System.out.println("Creating Bill");
+        System.out.println("Received DTO: " + billDto.toString());
+        
         Bill bill = DtoConverter.toBill(billDto);
+        System.out.println("Converted to Entity: " + bill.toString());
+        
         Bill createdBill = billService.createBill(bill);
         if (createdBill != null) {
-            return new ResponseEntity<>(DtoConverter.toBillDto(createdBill), HttpStatus.CREATED);
+            BillDto responseDto = DtoConverter.toBillDto(createdBill);
+            System.out.println("Response DTO: " + responseDto.toString());
+            return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
         }
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -45,7 +51,7 @@ public class BillController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<BillDto> getBillById(@PathVariable long id){
+    public ResponseEntity<BillDto> getBillById(@PathVariable Long id){
         System.out.println("Fetching the Bill by ID");
         Bill bill = billService.getBillById(id);
         if (bill != null) {
@@ -55,7 +61,7 @@ public class BillController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<BillDto> updateBill(@PathVariable long id, @RequestBody BillDto billDto){
+    public ResponseEntity<BillDto> updateBill(@PathVariable Long id, @RequestBody BillDto billDto){
         System.out.println("Updating the Bill by ID");
         Bill bill = DtoConverter.toBill(billDto);
         Bill updatedBill = billService.updateBill(id, bill);
@@ -66,7 +72,7 @@ public class BillController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteBill(@PathVariable long id){
+    public ResponseEntity<Void> deleteBill(@PathVariable Long id){
         System.out.println("Deleting the Bill by ID");
         Bill bill = billService.getBillById(id);
         if (bill != null) {

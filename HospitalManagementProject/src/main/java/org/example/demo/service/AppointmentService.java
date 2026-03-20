@@ -15,9 +15,17 @@ public class AppointmentService {
 
     public Appointment createAppointment(Appointment appointment) {
         try{
-            return appointmentRepository.save(appointment);
+            System.out.println("Creating appointment with data:");
+            System.out.println("Patient ID: " + appointment.getPatientId());
+            System.out.println("Doctor ID: " + appointment.getDoctorId());
+            System.out.println("Date: " + appointment.getDate());
+            
+            Appointment savedAppointment = appointmentRepository.save(appointment);
+            System.out.println("Appointment saved successfully with ID: " + savedAppointment.getId());
+            return savedAppointment;
         }catch(Exception e){
-            System.out.println("Error message: "+e.getMessage());
+            System.out.println("Error creating appointment: "+e.getMessage());
+            e.printStackTrace(); // Print full stack trace for debugging
             return null;
         }
     }
@@ -31,7 +39,7 @@ public class AppointmentService {
         }
     }
 
-    public Appointment getAppointmentById(long id) {
+    public Appointment getAppointmentById(Long id) {
         try{
             return appointmentRepository.findById(id).orElse(null);
         }catch(Exception e){
@@ -40,7 +48,7 @@ public class AppointmentService {
         }
     }
 
-    public Appointment updateAppointment(long id, Appointment appointment){
+    public Appointment updateAppointment(Long id, Appointment appointment){
         try{
             Appointment existingAppointment = appointmentRepository.findById(id).orElse(null);
             if (existingAppointment != null) {
@@ -56,7 +64,7 @@ public class AppointmentService {
         }
     }
 
-    public void deleteAppointment(long id) {
+    public void deleteAppointment(Long id) {
         try{
             appointmentRepository.deleteById(id);
         }catch(Exception e){
