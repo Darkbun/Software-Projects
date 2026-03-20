@@ -6,7 +6,6 @@ import java.time.format.DateTimeFormatter;
 public class DateUtil {
     
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-    private static final DateTimeFormatter isoFormatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
     
     public static String formatDateTime(LocalDateTime dateTime) {
         if (dateTime == null) {
@@ -21,21 +20,14 @@ public class DateUtil {
             return null;
         }
         try {
-            // Try ISO format first
-            LocalDateTime parsed = LocalDateTime.parse(dateString, isoFormatter);
-            System.out.println("Successfully parsed ISO date: " + dateString + " -> " + parsed);
+            LocalDateTime parsed = LocalDateTime.parse(dateString, formatter);
+            System.out.println("Successfully parsed date: " + dateString + " -> " + parsed);
             return parsed;
-        } catch (Exception e1) {
-            try {
-                // Try custom format
-                LocalDateTime parsed = LocalDateTime.parse(dateString, formatter);
-                System.out.println("Successfully parsed custom date: " + dateString + " -> " + parsed);
-                return parsed;
-            } catch (Exception e2) {
-                System.out.println("Failed to parse date: " + dateString + ", Error: " + e2.getMessage());
-                e2.printStackTrace();
-                return null;
-            }
+        } catch (Exception e) {
+            System.out.println("Failed to parse date: " + dateString + ", Error: " + e.getMessage());
+            System.out.println("Please use format: dd-MM-yyyy HH:mm:ss (e.g., 20-03-2026 14:30:00)");
+            e.printStackTrace();
+            return null;
         }
     }
     

@@ -153,6 +153,8 @@ POST /api/v1/appointment
 }
 ```
 
+**Note**: Only `dd-MM-yyyy HH:mm:ss` format is accepted for dates.
+
 ### Response
 ```json
 {
